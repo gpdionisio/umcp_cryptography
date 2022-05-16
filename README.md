@@ -19,8 +19,27 @@ In this assignment, you must decrypt a challenge ciphertext generated using AES 
 
 In this assignment, you will implement an attack against basic CBC-MAC showing that basic CBC-MAC is not secure when used to authenticate/verify messages of different lengths. Here, you will be given the ability to obtain tags (with respect to some unknown key) for any 2-block (32-byte) messages of your choice; your goal is to forge a valid tag (with respect to the same key) on the 4-block (64-byte) message "I, the server, hereby agree that I will pay $100 to this student." (Omit the final period and the quotation marks. You should verify that the message contains exactly 64 ASCII characters.) You will also be given access to a verification routine that you can use to verify your solution.
 
+## Week 7 [Plain-RSA Attacks][w7]
+In an attempt to avoid the attacks on the "plain RSA" signature scheme, J. Random Hacker has designed her own RSA-based signature scheme. The scheme works as follows: the public key is a standard RSA public key (N, e), and the private key is the usual (N, d), where N is a 128-byte (1024-bit) integer. To sign a message m of length exactly 63 bytes, set [M = 0x00 m 0x00 m] and then compute the signature M^d mod N. (If m is shorter than 63 bytes, 0-bytes are first preprended to make its length exactly 63 bytes. This means that the signature on any message m is the same as the signatures on 0x00 m and 0x00 00 m, etc., allowing easy forgery attacks. This is a known vulnerability that is not the point of this problem.)<br>
+J. Random Hacker is so sure this scheme is secure, she is offering a bounty of 1 point to anyone who can forge a signature on the 63-byte message
+
+> Crypto is hard --- even schemes that look complex can be broken
+
+with respect to the public key (hex values)
+
+```
+N = a99263f5cd9a6c3d93411fbf682859a07b5e41c38abade2a551798e6c8af5af0
+    8dee5c7420c99f0f3372e8f2bfc4d0c85115b45a0abc540349bf08b251a80b85
+    975214248dffe57095248d1c7e375125c1da25227926c99a5ba4432dfcfdae3
+    00b795f1764af043e7c1a8e070f5229a4cbc6c5680ff2cd6fa1d62d39faf3d41d
+
+e = 10001
+```
+
+You will be given the ability to obtain signatures on messages of your choice -- except for the message above! You will also be given access to a verification routine that you can use to check your solution.
 
 [w1]: week_01-vigenere/
 [w2]: week_02-many_time_pad/
 [w3]: week_03-padding_oracle/
 [w4]: week_04-cbc_mac/
+[w7]: week_07-rsa/
